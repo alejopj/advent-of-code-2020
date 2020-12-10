@@ -1,6 +1,8 @@
 package com.adventofcode.alejopj.day10;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
@@ -46,20 +48,30 @@ public class Day10 {
 		sortedJoltageRatings.add(0, initialJoltageRating);
 		sortedJoltageRatings.add(sortedJoltageRatings.get(sortedJoltageRatings.size() - 1) + finalJoltageDiff);
 		
-		return findWaysToConnectChargingOutletToDevice(sortedJoltageRatings, allowedInputJoltageDiffs);
+		Map<List<Integer>, Long> waysByJoltageRatings = new LinkedHashMap<>();
+		return findWaysToConnectChargingOutletToDevice(sortedJoltageRatings, allowedInputJoltageDiffs, waysByJoltageRatings);
 	}
 	
-	private Long findWaysToConnectChargingOutletToDevice(List<Integer> joltageRatings, List<Integer> allowedInputJoltageDiffs) {
+	private Long findWaysToConnectChargingOutletToDevice(List<Integer> joltageRatings,
+			List<Integer> allowedInputJoltageDiffs, Map<List<Integer>, Long> waysByJoltageRatings) {
 		
 		if (joltageRatings.size() == 1) {
 			return 1L;
 		}
+		if (waysByJoltageRatings.containsKey(joltageRatings)) {
+			return waysByJoltageRatings.get(joltageRatings);
+		}
 		List<Integer> nextJotalgeRatings = joltageRatings.parallelStream()
 				.filter(rating -> allowedInputJoltageDiffs.contains(rating - joltageRatings.get(0)))
 				.collect(ImmutableList.toImmutableList());
-		return nextJotalgeRatings.parallelStream().mapToLong(joltageRating ->
-				findWaysToConnectChargingOutletToDevice(joltageRatings.subList(joltageRatings.indexOf(joltageRating),
-						joltageRatings.size()), allowedInputJoltageDiffs)).sum();
+		Long ways = 0L;
+		for (Integer joltageRating : nextJotalgeRatings) {
+			ways += findWaysToConnectChargingOutletToDevice(
+					joltageRatings.subList(joltageRatings.indexOf(joltageRating), joltageRatings.size()),
+					allowedInputJoltageDiffs, waysByJoltageRatings);
+		}
+		waysByJoltageRatings.put(joltageRatings, ways);
+		return ways;
 	}
 	
 }
