@@ -235,17 +235,5 @@ public class Day11 {
 		
 		return firstSeatStatuses;
 	}
-
-	private void printMap(SeatStatus[][] seatStatuses) {
-
-		for (int i = 0; i < seatStatuses.length; i++) {
-			
-			for (int j = 0; j < seatStatuses[0].length; j++) {
-				
-				System.out.print(seatStatuses[i][j].getStatus());
-			}
-			System.out.println();
-		}
-	}
 	
 }
