@@ -14,8 +14,9 @@ public class Day11Test {
 	
 	/**
 	 * Given a list of seat statuses
-	 * And iteration N and N-1 are equals
+	 * And considering adjacent seats
 	 * When checked for the number of occupied seats
+	 * And iteration N and N-1 are equals
 	 * Then that number is returned
 	 * And that number is 37
 	 */
@@ -30,8 +31,9 @@ public class Day11Test {
 	
 	/**
 	 * Given a list of seat statuses
-	 * And iteration N and N-1 are equals
+	 * And considering adjacent seats
 	 * When checked for the number of occupied seats
+	 * And iteration N and N-1 are equals
 	 * Then that number is returned
 	 */
 	@Test
@@ -46,10 +48,11 @@ public class Day11Test {
 	
 	/**
 	 * Given a list of seat statuses
-	 * And iteration N and N-1 are equals
+	 * And considering visible seats
 	 * When checked for the number of occupied seats
+	 * And iteration N and N-1 are equals
 	 * Then that number is returned
-	 * And that number is 37
+	 * And that number is 26
 	 */
 	@Test
 	public void findNewNumberOfOccupiedSeatsIs26() {
@@ -62,8 +65,9 @@ public class Day11Test {
 	
 	/**
 	 * Given a list of seat statuses
-	 * And iteration N and N-1 are equals
+	 * And considering visible seats
 	 * When checked for the number of occupied seats
+	 * And iteration N and N-1 are equals
 	 * Then that number is returned
 	 */
 	@Test
