@@ -55,9 +55,8 @@ public class Day13Test {
 	public void findEarliestTimeMatchingBusesAndPositionsIs1068781() {
 
 		Map<Integer, List<Integer>> departureAndBuses = getDepartureAndBuses("part2.txt");
-		Long initialLeastCommonMultCandidate = 0L;
 		Day13 day13 = new Day13();
-		Long product = day13.findEarliestTimeMatchingBusesAndPositions(initialLeastCommonMultCandidate, departureAndBuses);
+		Long product = day13.findEarliestTimeMatchingBusesAndPositions(departureAndBuses);
 		Assert.assertTrue(product == 1068781);
 	}
 	
@@ -70,9 +69,8 @@ public class Day13Test {
 	public void findEarliestTimeMatchingBusesAndPositions() {
 
 		Map<Integer, List<Integer>> departureAndBuses = getDepartureAndBuses("input.txt");
-		Long initialLeastCommonMultCandidate = 100000000000000L;
 		Day13 day13 = new Day13();
-		Long product = day13.findEarliestTimeMatchingBusesAndPositions(initialLeastCommonMultCandidate, departureAndBuses);
+		Long product = day13.findEarliestTimeMatchingBusesAndPositions(departureAndBuses);
 		Assert.assertTrue(product >= 0);
 		System.out.println(product);
 	}

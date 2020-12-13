@@ -1,9 +1,10 @@
 package com.adventofcode.alejopj.day13;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 public class Day13 {
 
@@ -25,41 +26,56 @@ public class Day13 {
 		return bus * waitingTime;
 	}
 
-	public Long findEarliestTimeMatchingBusesAndPositions(Long initialCandidate,
-			Map<Integer, List<Integer>> departureAndBuses) {
-		
-		Long time = 0L;
+	public Long findEarliestTimeMatchingBusesAndPositions(Map<Integer, List<Integer>> departureAndBuses) {
 		
 		List<Integer> buses = departureAndBuses.values().iterator().next();
-		Map<Integer, Integer> busByPosition = new LinkedHashMap<>();
-		for (int i = 0; i < buses.size(); i++) {
-			if (buses.get(i) != Integer.MIN_VALUE) {
-				busByPosition.put(i, buses.get(i));
-			}
-		}
-		Long candidate = initialCandidate > 0 ? initialCandidate : 1;
-		boolean isLeastCommonMultiple = true;
-		Integer position = null;
-		Integer bus = null;
-		for (long i = candidate; i <= Long.MAX_VALUE; i++) {
-			isLeastCommonMultiple = true;
-			position = null;
-			bus = null;
-			for (Entry<Integer, Integer> entry : busByPosition.entrySet()) {
-				position = entry.getKey();
-				bus = entry.getValue();
-				isLeastCommonMultiple &= (((i + position) % bus) == 0);
-				if (!isLeastCommonMultiple) {
-					break;
-				}
-			}
-			if (isLeastCommonMultiple) {
-				time = i;
-				break;
-			}
+		Map<Integer, Integer> numbersAndReminders = buses.parallelStream()
+				.filter(bus -> bus != Integer.MIN_VALUE)
+				.collect(ImmutableMap.toImmutableMap(bus -> bus, bus -> bus - buses.indexOf(bus)));
+		List<Integer> numbers = numbersAndReminders.keySet().parallelStream().collect(ImmutableList.toImmutableList());
+		List<Integer> reminders = numbersAndReminders.values().parallelStream().collect(ImmutableList.toImmutableList());
+		
+		Long product = numbers.parallelStream().mapToLong(number -> number).reduce(1, (a, b) -> a * b);
+		Long sum = 0L;
+		
+		for (int i = 0; i < numbers.size(); i++) {
+			Long number = Long.valueOf(numbers.get(i));
+			Long partialProduct = product / number;
+			Long inverse = mulInv(partialProduct, number);
+			Integer reminder = reminders.get(i);
+			sum += partialProduct * inverse * reminder;
 		}
 		
-		return time;
+		return sum % product;
 	}
+	
+	// Private
+	
+	private Long mulInv(Long a, Long b) {
+		
+        long b0 = b;
+        long x0 = 0;
+        long x1 = 1;
+ 
+        if (b == 1) {
+        	return 1L;
+        }
+ 
+        while (a > 1) {
+        	long q = a / b;
+        	long amb = a % b;
+            a = b;
+            b = amb;
+            long xqx = x1 - q * x0;
+            x1 = x0;
+            x0 = xqx;
+        }
+ 
+        if (x1 < 0) {
+        	x1 += b0;
+        }
+ 
+        return x1;
+    }
 	
 }
