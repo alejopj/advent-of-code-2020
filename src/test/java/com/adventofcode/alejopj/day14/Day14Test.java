@@ -28,7 +28,6 @@ public class Day14Test {
 		List<MemoryOperation> memOperations = getMaskAndMemPositions("part1.txt");
 		Day14 day14 = new Day14();
 		Long sum = day14.findSumOfMemoryValues(memOperations);
-		System.out.println(sum);
 		Assert.assertTrue(sum == 165);
 	}
 	
