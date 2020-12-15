@@ -101,18 +101,18 @@ public class Day15Test {
 		Day15 day15 = new Day15();
 		Integer number = day15.findNthSpokenNumber(ImmutableList.of(0,3,6), 30000000);
 		Assert.assertTrue(number == 175594);
-//		number = day15.findNthSpokenNumber(ImmutableList.of(1,3,2), 30000000);
-//		Assert.assertTrue(number == 2578);
-//		number = day15.findNthSpokenNumber(ImmutableList.of(2,1,3), 30000000);
-//		Assert.assertTrue(number == 3544142);
-//		number = day15.findNthSpokenNumber(ImmutableList.of(1,2,3), 30000000);
-//		Assert.assertTrue(number == 261214);
-//		number = day15.findNthSpokenNumber(ImmutableList.of(2,3,1), 30000000);
-//		Assert.assertTrue(number == 6895259);
-//		number = day15.findNthSpokenNumber(ImmutableList.of(3,2,1), 30000000);
-//		Assert.assertTrue(number == 18);
-//		number = day15.findNthSpokenNumber(ImmutableList.of(3,1,2), 30000000);
-//		Assert.assertTrue(number == 362);
+		number = day15.findNthSpokenNumber(ImmutableList.of(1,3,2), 30000000);
+		Assert.assertTrue(number == 2578);
+		number = day15.findNthSpokenNumber(ImmutableList.of(2,1,3), 30000000);
+		Assert.assertTrue(number == 3544142);
+		number = day15.findNthSpokenNumber(ImmutableList.of(1,2,3), 30000000);
+		Assert.assertTrue(number == 261214);
+		number = day15.findNthSpokenNumber(ImmutableList.of(2,3,1), 30000000);
+		Assert.assertTrue(number == 6895259);
+		number = day15.findNthSpokenNumber(ImmutableList.of(3,2,1), 30000000);
+		Assert.assertTrue(number == 18);
+		number = day15.findNthSpokenNumber(ImmutableList.of(3,1,2), 30000000);
+		Assert.assertTrue(number == 362);
 	}
 	
 	/**
