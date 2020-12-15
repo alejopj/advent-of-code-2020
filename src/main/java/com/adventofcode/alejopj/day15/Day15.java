@@ -19,18 +19,18 @@ public class Day15 {
 			spokenNumberByTurn.put(i, startingNumbers.get(i));
 		}
 		
-		while (spokenNumberByTurn.size() < n) {
+		for (int i = startingNumbers.size(); i < n; i++) {
 			
 			Map<Integer, Integer> previouslySpokenNumberByTurn = new LinkedHashMap<>(spokenNumberByTurn);
 			previouslySpokenNumberByTurn.remove(spokenNumberByTurn.size() - 1);
 			Integer previouslySpokenNumberTurn = null;
 			Integer lastSpokenNumber = spokenNumberByTurn.get(spokenNumberByTurn.size() - 1);
 			
-			for (int i = previouslySpokenNumberByTurn.size() - 1; i >= 0; i--) {
+			for (int j = previouslySpokenNumberByTurn.size() - 1; j >= 0; j--) {
 				
-				Integer spokenNumber = previouslySpokenNumberByTurn.get(i);
+				Integer spokenNumber = previouslySpokenNumberByTurn.get(j);
 				if (spokenNumber.equals(lastSpokenNumber)) {
-					previouslySpokenNumberTurn = i;
+					previouslySpokenNumberTurn = j;
 					break;
 				}
 			}
