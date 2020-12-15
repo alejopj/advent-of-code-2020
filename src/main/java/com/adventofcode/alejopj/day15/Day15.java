@@ -1,8 +1,12 @@
 package com.adventofcode.alejopj.day15;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import com.google.common.collect.ImmutableList;
 
 public class Day15 {
 
@@ -21,28 +25,45 @@ public class Day15 {
 		
 		for (int i = startingNumbers.size(); i < n; i++) {
 			
+			Integer lastSpokenTurn = null;
+			Integer lastSpokenNumber = null;
+			Iterator<Entry<Integer,Integer>> iterator = spokenNumberByTurn.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Entry<Integer, Integer> entry = iterator.next();
+				lastSpokenTurn = entry.getKey();
+				lastSpokenNumber = entry.getValue();
+			};
 			Map<Integer, Integer> previouslySpokenNumberByTurn = new LinkedHashMap<>(spokenNumberByTurn);
-			previouslySpokenNumberByTurn.remove(spokenNumberByTurn.size() - 1);
+			previouslySpokenNumberByTurn.remove(lastSpokenTurn);
 			Integer previouslySpokenNumberTurn = null;
-			Integer lastSpokenNumber = spokenNumberByTurn.get(spokenNumberByTurn.size() - 1);
 			
-			for (int j = previouslySpokenNumberByTurn.size() - 1; j >= 0; j--) {
+			List<Entry<Integer, Integer>> entries = ImmutableList.copyOf(previouslySpokenNumberByTurn.entrySet()).reverse();
+			for (Entry<Integer, Integer> entry : entries) {
 				
-				Integer spokenNumber = previouslySpokenNumberByTurn.get(j);
+				Integer spokenNumber = entry.getValue();
 				if (spokenNumber.equals(lastSpokenNumber)) {
-					previouslySpokenNumberTurn = j;
+					previouslySpokenNumberTurn = entry.getKey();
 					break;
 				}
 			}
+			
 			if (previouslySpokenNumberTurn == null) {
 				lastSpokenNumber = 0;
 			} else {
-				lastSpokenNumber = spokenNumberByTurn.size() - 1 - previouslySpokenNumberTurn;
+				lastSpokenNumber = lastSpokenTurn - previouslySpokenNumberTurn;
 			}
-			spokenNumberByTurn.put(spokenNumberByTurn.size(), lastSpokenNumber);
+			
+			spokenNumberByTurn.put(i, lastSpokenNumber);
+			
+			if (previouslySpokenNumberTurn != null) {
+				spokenNumberByTurn.remove(previouslySpokenNumberTurn);
+			}
 		}
 		
-		return spokenNumberByTurn.get(n - 1);
+		Integer lastSpokenNumber = null;
+		Iterator<Integer> iterator = spokenNumberByTurn.values().iterator();
+		while (iterator.hasNext()) { lastSpokenNumber = iterator.next(); };
+		return lastSpokenNumber;
 	}
 	
 }
