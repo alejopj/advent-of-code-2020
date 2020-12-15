@@ -41,6 +41,7 @@ public class Day15 {
 			}
 			spokenNumberByTurn.put(spokenNumberByTurn.size(), lastSpokenNumber);
 		}
+		
 		return spokenNumberByTurn.get(n - 1);
 	}
 	
