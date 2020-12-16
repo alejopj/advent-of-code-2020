@@ -16,9 +16,9 @@ import com.google.common.collect.ImmutableMap;
 public class Day16Test {
 	
 	/**
-	 * Given a list of starting numbers
-	 * When played to the most recently spoken number game
-	 * Then the 2020th number is returned
+	 * Given some notes containing ticket rules, our ticket and nearby tickets
+	 * When searching for our scanning error rate
+	 * Then that rage is returned
 	 * And that rate is 71
 	 */
 	@Test
@@ -31,9 +31,9 @@ public class Day16Test {
 	}
 	
 	/**
-	 * Given a list of starting numbers
-	 * When played to the most recently spoken number game
-	 * Then the 2020th number is returned
+	 * Given some notes containing ticket rules, our ticket and nearby tickets
+	 * When searching for our scanning error rate
+	 * Then that rage is returned
 	 */
 	@Test
 	public void findTicketScanningErrorRate() {
@@ -49,7 +49,7 @@ public class Day16Test {
 	
 	private Note getNote(String fileName) {
 		
-		Map<String, String> rules = ImmutableMap.of();
+		Map<String, List<Range>> rules = ImmutableMap.of();
 		List<Integer> ticket = ImmutableList.of();
 		List<List<Integer>> nearbyTickets = ImmutableList.of();
 		
@@ -81,10 +81,10 @@ public class Day16Test {
 		return new Note(rules, ticket, nearbyTickets);
 	}
 
-	private Map<String, String> getRules(List<String> lines, int fromIndex, int toIndex) {
+	private Map<String, List<Range>> getRules(List<String> lines, int fromIndex, int toIndex) {
 		
 		return lines.subList(fromIndex, toIndex).parallelStream()
-				.collect(ImmutableMap.toImmutableMap(line -> getRuleName(line), line -> getRuleRegex(line)));
+				.collect(ImmutableMap.toImmutableMap(line -> getRuleName(line), line -> getRuleRanges(line)));
 	}
 	
 	private String getRuleName(String line) {
@@ -92,13 +92,12 @@ public class Day16Test {
 		return line.split(":")[0].trim();
 	}
 	
-	private String getRuleRegex(String line) {
+	private List<Range> getRuleRanges(String line) {
 		
-		List<String> ranges = Arrays.stream(line.split(":")[1].split("or"))
-				.map(range -> range.trim())
+		return Arrays.stream(line.split(":")[1].split("or"))
+				.map(range -> range.trim().split("-"))
+				.map(range -> new Range(Integer.valueOf(range[0]), Integer.valueOf(range[1])))
 				.collect(ImmutableList.toImmutableList());
-		
-		return "[" + String.join("|", ranges) + "]";
 	}
 	
 	private List<List<Integer>> getTickets(List<String> lines, int fromIndex, int toIndex) {

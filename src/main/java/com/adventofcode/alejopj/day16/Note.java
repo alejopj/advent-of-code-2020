@@ -5,18 +5,18 @@ import java.util.Map;
 
 public class Note {
 
-	private final Map<String, String> rules;
+	private final Map<String, List<Range>> rules;
 	private final List<Integer> ticket;
 	private final List<List<Integer>> nearbyTickets;
 	
-	public Note(Map<String, String> rules, List<Integer> ticket, List<List<Integer>> nearbyTickets) {
+	public Note(Map<String, List<Range>> rules, List<Integer> ticket, List<List<Integer>> nearbyTickets) {
 		
 		this.rules = rules;
 		this.ticket = ticket;
 		this.nearbyTickets = nearbyTickets;
 	}
 
-	public Map<String, String> getRules() {
+	public Map<String, List<Range>> getRules() {
 		return rules;
 	}
 
