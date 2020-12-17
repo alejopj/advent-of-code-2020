@@ -26,7 +26,7 @@ public class Day16Test {
 
 		Note note = getNote("part1.txt");
 		Day16 day16 = new Day16();
-		Long rate = day16.findTicketScanningErrorRate(note);
+		Integer rate = day16.findTicketScanningErrorRate(note);
 		Assert.assertTrue(rate == 71);
 	}
 	
@@ -40,9 +40,24 @@ public class Day16Test {
 
 		Note note = getNote("input.txt");
 		Day16 day16 = new Day16();
-		Long rate = day16.findTicketScanningErrorRate(note);
+		Integer rate = day16.findTicketScanningErrorRate(note);
 		Assert.assertTrue(rate >= 0);
 		System.out.println(rate);
+	}
+	
+	/**
+	 * Given some notes containing ticket rules, our ticket and nearby tickets
+	 * When searching for the product of fields starting with word departure in our ticket
+	 * Then that product is returned
+	 */
+	@Test
+	public void findDepartureFieldsProduct() {
+
+		Note note = getNote("input.txt");
+		Day16 day16 = new Day16();
+		Long product = day16.findFieldsProduct(note, "departure");
+		Assert.assertTrue(product >= 0);
+		System.out.println(product);
 	}
 	
 	// Private
