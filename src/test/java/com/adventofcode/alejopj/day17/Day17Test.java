@@ -27,7 +27,6 @@ public class Day17Test {
 		Map<Point3D, CubeStatus> cubes = getCubes("part1.txt");
 		Day17 day17 = new Day17();
 		Long activeCubes = day17.findNumberOfActiveCubesAfterCycles(cubes, 6);
-		System.err.println(activeCubes);
 		Assert.assertTrue(activeCubes == 112);
 	}
 	
