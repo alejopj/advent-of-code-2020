@@ -35,9 +35,9 @@ public class Day17 {
 		Map<Point3D, CubeStatus> newCubes = new LinkedHashMap<>();
 		
 		List<Point3D> neighbors = new ArrayList<>();
-		for (int x = point.getX() -1; x < point.getX() + 1; x++) {
-			for (int y = point.getY() -1; y < point.getY() + 1; y++) {
-				for (int z = point.getZ() -1; z < point.getZ() + 1; z++) {
+		for (int x = point.getX() -1; x <= point.getX() + 1; x++) {
+			for (int y = point.getY() -1; y <= point.getY() + 1; y++) {
+				for (int z = point.getZ() -1; z <= point.getZ() + 1; z++) {
 					Point3D neighbor = new Point3D(x, y, z);
 					if (neighbor != point) {
 						neighbors.add(neighbor);
@@ -62,8 +62,6 @@ public class Day17 {
 				newCubes.put(point, CubeStatus.ACTIVE);
 			}
 		}
-		
-		System.err.println(newCubes);
 		
 		return newCubes;
 	}
