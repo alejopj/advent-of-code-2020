@@ -3,9 +3,10 @@ package com.adventofcode.alejopj.day19;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 
 public class Day19 {
 	
@@ -27,8 +28,7 @@ public class Day19 {
 				.findFirst().orElse(null);
 		List<String> messages = rulesAndMessages.values().iterator().next();
 		maxLoops = getMaxCharRepetitions(messages);
-		List<String> validMessages = getValidMessages(ImmutableList.of(""), initialRule, rules);
-		
+		Set<String> validMessages = getValidMessages(ImmutableSet.of(""), initialRule, rules);
 		return messages.stream().filter(message -> validMessages.contains(message)).count();
 	}
 	
@@ -61,60 +61,55 @@ public class Day19 {
 		return ruleLoops;
 	}
 	
-	private List<String> getValidMessages(List<String> messages, Rule rule, List<Rule> rules) {
+	private Set<String> getValidMessages(Set<String> messages, Rule rule, List<Rule> rules) {
 		
-//		if (rule.hasLoop()) {
-//			Integer loops = ruleLoops.get(rule);
-//			loops++;
-//			if (loops == maxLoops) {
-//				return ImmutableList.of();
-//			}
-//		}
+		if (rule.hasLoop()) {
+			Integer loops = ruleLoops.get(rule);
+			loops++;
+			if (loops == maxLoops) {
+				return messages;
+			}
+		}
 		
 		if (rule.getValue() != null) {
-			return messages.stream().map(message -> message + rule.getValue()).collect(ImmutableList.toImmutableList());
+			return messages.stream().map(message -> message + rule.getValue()).collect(ImmutableSet.toImmutableSet());
 		} else {
 			
-			List<String> leftMessages = ImmutableList.of("");
+			Set<String> leftMessages = ImmutableSet.of("");
 			for (Integer ruleIndex : rule.getLeft()) {
 				Rule leftRule = rulesById.get(ruleIndex);
 				leftMessages = getValidMessages(leftMessages, leftRule, rules);
 			}
-			List<String> leftValidMessages = ImmutableList.copyOf(messages);
-			List<String> lMessages = ImmutableList.copyOf(leftMessages);
+			Set<String> leftValidMessages = ImmutableSet.copyOf(messages);
+			Set<String> lMessages = ImmutableSet.copyOf(leftMessages);
 			leftValidMessages = leftValidMessages.stream()
 					.map(message -> lMessages.stream()
 							.map(leftMessage -> message + leftMessage)
-							.collect(ImmutableList.toImmutableList()))
-					.flatMap(List::stream)
-					.distinct()
-					.collect(ImmutableList.toImmutableList());
+							.collect(ImmutableSet.toImmutableSet()))
+					.flatMap(Set::stream)
+					.collect(ImmutableSet.toImmutableSet());
 
-			List<String> rightValidMessages = ImmutableList.of();
+			Set<String> rightValidMessages = ImmutableSet.of();
 			if (!rule.getRight().isEmpty()) {
-				List<String> rightMessages = ImmutableList.of("");
+				Set<String> rightMessages = ImmutableSet.of("");
 				for (Integer ruleIndex : rule.getRight()) {
 					Rule rightRule = rulesById.get(ruleIndex);
 					rightMessages = getValidMessages(rightMessages, rightRule, rules);
 				}
-				rightValidMessages = ImmutableList.copyOf(messages);
-				List<String> rMessages = ImmutableList.copyOf(rightMessages);
+				rightValidMessages = ImmutableSet.copyOf(messages);
+				Set<String> rMessages = ImmutableSet.copyOf(rightMessages);
 				rightValidMessages = rightValidMessages.stream()
 						.map(message -> rMessages.stream()
 								.map(rightMessage -> message + rightMessage)
-								.collect(ImmutableList.toImmutableList()))
-						.flatMap(List::stream)
-						.distinct()
-						.collect(ImmutableList.toImmutableList());
+								.collect(ImmutableSet.toImmutableSet()))
+						.flatMap(Set::stream)
+						.collect(ImmutableSet.toImmutableSet());
 			}
 			
-			return ImmutableList.<String>builder()
+			return ImmutableSet.<String>builder()
 					.addAll(leftValidMessages)
 					.addAll(rightValidMessages)
-					.build()
-					.stream()
-					.distinct()
-					.collect(ImmutableList.toImmutableList());
+					.build();
 		}
 	}
 	

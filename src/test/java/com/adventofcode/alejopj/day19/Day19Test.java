@@ -64,6 +64,8 @@ public class Day19Test {
 		System.out.println(number);
 	}
 	
+	// Part 2
+	
 	/**
 	 * Given a list of rules and messages
 	 * And an initial rule
