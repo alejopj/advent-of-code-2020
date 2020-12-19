@@ -11,7 +11,6 @@ import com.google.common.collect.ImmutableSet;
 public class Day19 {
 	
 	private Map<Integer, Rule> rulesById;
-	private Integer maxLoops;
 	private Map<Rule, Integer> ruleLoops;
 
 	public Day19() {
@@ -27,25 +26,8 @@ public class Day19 {
 				.filter(rule -> rule.getId().equals(ruleId))
 				.findFirst().orElse(null);
 		List<String> messages = rulesAndMessages.values().iterator().next();
-		maxLoops = getMaxCharRepetitions(messages);
 		Set<String> validMessages = getValidMessages(ImmutableSet.of(""), initialRule, rules);
 		return messages.stream().filter(message -> validMessages.contains(message)).count();
-	}
-	
-	private Integer getMaxCharRepetitions(List<String> messages) {
-		
-		return messages.stream().mapToInt(message -> getMaxCharRepetitions(message)).max().orElse(0);
-	}
-	
-	private Integer getMaxCharRepetitions(String message) {
-		
-		Map<String, Integer> charRepetitions = new HashMap<>();
-		
-		message.chars().forEach(character -> charRepetitions.put(String.valueOf(character),
-				charRepetitions.containsKey(String.valueOf(character)) ?
-						charRepetitions.get(String.valueOf(character)) + 1 : 0));
-		
-		return charRepetitions.values().stream().mapToInt(value -> value).max().orElse(0);
 	}
 	
 	private Map<Rule, Integer> getRuleLoops(List<Rule> rules) {
@@ -62,14 +44,6 @@ public class Day19 {
 	}
 	
 	private Set<String> getValidMessages(Set<String> messages, Rule rule, List<Rule> rules) {
-		
-		if (rule.hasLoop()) {
-			Integer loops = ruleLoops.get(rule);
-			loops++;
-			if (loops == maxLoops) {
-				return messages;
-			}
-		}
 		
 		if (rule.getValue() != null) {
 			return messages.stream().map(message -> message + rule.getValue()).collect(ImmutableSet.toImmutableSet());
