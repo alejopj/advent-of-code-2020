@@ -24,7 +24,7 @@ public class Day21Test {
 
 		List<Food> foods = getFoods("part1.txt");
 		Day21 day21 = new Day21();
-		Integer number = day21.findNumberOfAppearancesOfAllergensFreeIngredients(foods);
+		Integer number = day21.findNumberOfAppearancesOfAllergenFreeIngredients(foods);
 		Assert.assertTrue(number == 5);
 	}
 	
@@ -38,7 +38,7 @@ public class Day21Test {
 
 		List<Food> foods = getFoods("input.txt");
 		Day21 day21 = new Day21();
-		Integer number = day21.findNumberOfAppearancesOfAllergensFreeIngredients(foods);
+		Integer number = day21.findNumberOfAppearancesOfAllergenFreeIngredients(foods);
 		Assert.assertTrue(number >= 0);
 		System.out.println(number);
 	}

@@ -8,7 +8,7 @@ public class Day21 {
 		
 	}
 
-	public Integer findNumberOfAppearancesOfAllergensFreeIngredients(List<Food> foods) {
+	public Integer findNumberOfAppearancesOfAllergenFreeIngredients(List<Food> foods) {
 		
 		return 0;
 	}
